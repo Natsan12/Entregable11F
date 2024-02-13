@@ -6,7 +6,7 @@ public class NewBehaviourScript : MonoBehaviour
 {
 	public float velocidadCaminar = 5f;
 	public float velocidadSalto = 10f;
-	public float alturaAgacharse = 0.5f;
+
 	
 
 	private bool estaAgachado=false;
