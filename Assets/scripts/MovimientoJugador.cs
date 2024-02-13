@@ -5,24 +5,35 @@ using UnityEngine;
 public class NewBehaviourScript : MonoBehaviour
 {
 	public float velocidadCaminar = 5f;
-	public float velocidadSalto = 10f;
+	public float fuerzaSalto = 10f;
+    public Rigidbody2D rb;
+	
 
 	
 
-	private bool estaAgachado=false;
-	private Rigidbody rb;
-
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()
     {
 		float movimientoHorizontal = Input.GetAxisRaw("Horizontal");
-		float movimientoVertical = Input.GetAxisRaw("Vertical");
+		
 
-		rb.velocity = new Vector2(movimientoHorizontal,rb.velocity.y);
+		rb.velocity = new Vector2(movimientoHorizontal*velocidadCaminar,rb.velocity.y);
+        Saltar();
 	}
-
+    private void Saltar()
+    {
+        float movimientoVertical = Input.GetAxisRaw("Vertical");
+        if (Input.GetKey(KeyCode.UpArrow)) 
+        {
+            rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+        }
+        //if (movimientoVertical == 1) 
+        //{
+        //    rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+        //}
+    }
 
 }
