@@ -1,8 +1,9 @@
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class MovimientoJugador : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class MovimientoJugador : MonoBehaviour
     public LayerMask Grounded;
     public bool ground;
     public Animator animator;
-    public bool ladderUp = false;
+    //public bool ladderUp = false;
 	
 
     private void Awake()
@@ -29,7 +30,8 @@ public class MovimientoJugador : MonoBehaviour
         Saltar();
         float movimientoHorizontal = Input.GetAxisRaw("Horizontal");
         
-
+        if(movimientoHorizontal<0.0f)transform.localScale = new Vector3 (-1.0f,1.0f,1.0f);
+        else if(movimientoHorizontal>0.0f)transform.localScale=new Vector3(1.0f,1.0f,1.0f);
         Debug.DrawRay(transform.position, Vector3.down*0.1f, Color.red); //Dibujar el ray
 
 
@@ -55,11 +57,12 @@ public class MovimientoJugador : MonoBehaviour
         
     }
     private void Saltar()
+    
     {
-        float movimientoVertical = Input.GetAxisRaw("Vertical");
-        rb.velocity = new Vector2(0f, movimientoVertical * velocidadCaminar);
+        //float movimientoVertical = Input.GetAxisRaw("Vertical");
+        //rb.velocity = new Vector2(0f, movimientoVertical * velocidadCaminar);
 
-        if (Input.GetKey(KeyCode.UpArrow) && ground && !ladderUp) 
+        if (Input.GetKey(KeyCode.UpArrow) && ground ) 
         {
             rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
             
@@ -69,29 +72,30 @@ public class MovimientoJugador : MonoBehaviour
 
 
         }
-        if (movimientoVertical !=0 && ground && ladderUp)
-        {
-
-            animator.SetFloat("velX", movimientoVertical);
-           
-            Debug.Log("prueba");
-
-
-        }
-
-
-        //if(!ground)
+        //if (movimientoVertical !=0 && ground && ladderUp)
         //{
-        //    mano = true;
+
+        //    animator.SetFloat("velX", movimientoVertical);
+           
+        //    Debug.Log("prueba");
+
+
         //}
-
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.CompareTag("Ladder"))
-        {
-            ladderUp = true;
-        }
-    }
-
 }
+
+//if(!ground)
+//{
+//    mano = true;
+//}
+
+
+//    private void OnTriggerEnter2D(Collider2D collision)
+//    {
+//        if(collision.gameObject.CompareTag("Ladder"))
+//        {
+//            ladderUp = true;
+//        }
+//    }
+
+//}
