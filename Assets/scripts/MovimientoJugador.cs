@@ -13,6 +13,9 @@ public class MovimientoJugador : MonoBehaviour
     public LayerMask Grounded;
     public bool ground;
     public Animator animator;
+
+    public string horizontal;
+    public KeyCode salto;
     //public bool ladderUp = false;
 	
 
@@ -28,9 +31,9 @@ public class MovimientoJugador : MonoBehaviour
     private void FixedUpdate()
     {
         Saltar();
-        float movimientoHorizontal = Input.GetAxisRaw("Horizontal");
+        float movimientoHorizontal = Input.GetAxisRaw(horizontal);
         
-        if(movimientoHorizontal<0.0f)transform.localScale = new Vector3 (-1.0f,1.0f,1.0f);
+        if(movimientoHorizontal<0.0f)transform.localScale = new Vector3 (-1.0f,1.0f,1.0f);// Girar el jugador 
         else if(movimientoHorizontal>0.0f)transform.localScale=new Vector3(1.0f,1.0f,1.0f);
         Debug.DrawRay(transform.position, Vector3.down*0.1f, Color.red); //Dibujar el ray
 
@@ -62,21 +65,27 @@ public class MovimientoJugador : MonoBehaviour
         //float movimientoVertical = Input.GetAxisRaw("Vertical");
         //rb.velocity = new Vector2(0f, movimientoVertical * velocidadCaminar);
 
-        if (Input.GetKey(KeyCode.UpArrow) && ground ) 
+        if (Input.GetKey(salto) && ground) 
         {
             rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
             
             animator.SetTrigger("jump");
             Debug.Log("entro");
-            
-
 
         }
+        //if (Input.GetKey(KeyCode.W) && ground)
+        //{
+        //    rb2.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+
+        //    animator.SetTrigger("jump");
+        //    Debug.Log("entro");
+
+        //}
         //if (movimientoVertical !=0 && ground && ladderUp)
         //{
 
         //    animator.SetFloat("velX", movimientoVertical);
-           
+
         //    Debug.Log("prueba");
 
 
