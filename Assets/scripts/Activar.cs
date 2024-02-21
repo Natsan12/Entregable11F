@@ -5,13 +5,13 @@ using UnityEngine;
 public class Activar : MonoBehaviour
 {
     // Start is called before the first frame update
-    public Animator plataforma; 
+    public Animator obstaculo1; 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Obstaculo"))
         {
-            plataforma.enabled = true;
+            obstaculo1.enabled = true;
             Debug.Log("moverse");
         }
     }
