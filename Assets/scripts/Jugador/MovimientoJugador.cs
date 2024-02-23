@@ -1,12 +1,14 @@
-//using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class MovimientoJugador : MonoBehaviour
-{  // public GameObject PuntoDisparo;
+{   public GameObject Bala;
+    public Transform puntoDisparo;
 	public float velocidadCaminar = 15f;
 	public float fuerzaSalto = 50f;
     public Rigidbody2D rb;
@@ -78,18 +80,23 @@ public class MovimientoJugador : MonoBehaviour
 
     }
 
-        
-    //private void Shoot()
 
-     //{ Vector3 direction;
-       // if (transform.localScale.x == 1.0f) direction = Vector2.right;
-        //else direction = Vector2.left;
+    private void Shoot()
 
-       
+    { Vector3 direction;
+        if (transform.localScale.x == 1.0f) direction = Vector2.right;
+        else direction = Vector2.left;
 
-        //GameObject Bullets=Instantiate(PuntoDisparo.position+(direction*0.1f),Quaternion.identity);
-        //Bullets.GetComponent <Bullets>().SetDirection ( direction);
+
+
+        GameObject Bullets = Instantiate(Bala, puntoDisparo.position + (direction * 0.1f), Quaternion.identity);
+        Bullets.GetComponent<Bullets>().SetDirection(direction);
+
+
     }
+}
+
+
 
 
 
