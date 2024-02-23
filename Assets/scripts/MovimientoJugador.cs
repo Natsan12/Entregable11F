@@ -6,9 +6,9 @@ using UnityEngine.Rendering;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class MovimientoJugador : MonoBehaviour
-{
-	public float velocidadCaminar = 5f;
-	public float fuerzaSalto = 10f;
+{  // public GameObject PuntoDisparo;
+	public float velocidadCaminar = 15f;
+	public float fuerzaSalto = 50f;
     public Rigidbody2D rb;
     public LayerMask Grounded;
     public bool ground;
@@ -30,7 +30,7 @@ public class MovimientoJugador : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Saltar();
+        
         float movimientoHorizontal = Input.GetAxisRaw(horizontal);
         
         if(movimientoHorizontal<0.0f)transform.localScale = new Vector3 (-1.0f,1.0f,1.0f);// Girar el jugador 
@@ -38,60 +38,82 @@ public class MovimientoJugador : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down*0.1f, Color.red); //Dibujar el ray
 
 
-        ground = Physics2D.Raycast(transform.position, Vector2.down, 0.1f,Grounded);
-        
-          
-          
-  
+        ground = Physics2D.Raycast(transform.position, Vector3.down, 0.1f,Grounded);
 
 
-		rb.velocity = new Vector2(movimientoHorizontal*velocidadCaminar,rb.velocity.y);
+
+        if (Input.GetKey(salto) && ground)
+        {
+            rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
+            { 
+                Saltar(); 
+            }
+
+                animator.SetTrigger("jump");
+            Debug.Log("entro");
+        }
+    
+
+        rb.velocity = new Vector2(movimientoHorizontal*velocidadCaminar,rb.velocity.y);
         if(movimientoHorizontal !=0 )
         {
             animator.SetFloat("velX", movimientoHorizontal);
-           
-
         }
-        //else
+        //if (Input.GetKey(KeyCode.DownArrow))
+
         //{
-        //    animator.SetBool("Jumping", mano = true);
-        //}       
-       
-        
+          // Shoot();
+        //}
+
     }
     private void Saltar()
     
     {
         //float movimientoVertical = Input.GetAxisRaw("Vertical");
         //rb.velocity = new Vector2(0f, movimientoVertical * velocidadCaminar);
+        
 
-        if (Input.GetKey(salto) && ground) 
-        {
-            rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
-            
-            animator.SetTrigger("jump");
-            Debug.Log("entro");
+      
+        
 
-        }
-        //if (Input.GetKey(KeyCode.W) && ground)
-        //{
-        //    rb2.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
-
-        //    animator.SetTrigger("jump");
-        //    Debug.Log("entro");
-
-        //}
-        //if (movimientoVertical !=0 && ground && ladderUp)
-        //{
-
-        //    animator.SetFloat("velX", movimientoVertical);
-
-        //    Debug.Log("prueba");
-
-
-        //}
     }
-}
+
+        
+    //private void Shoot()
+
+     //{ Vector3 direction;
+       // if (transform.localScale.x == 1.0f) direction = Vector2.right;
+        //else direction = Vector2.left;
+
+       
+
+        //GameObject Bullets=Instantiate(PuntoDisparo.position+(direction*0.1f),Quaternion.identity);
+        //Bullets.GetComponent <Bullets>().SetDirection ( direction);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//}
+//if (movimientoVertical !=0 && ground && ladderUp)
+//{
+
+//    animator.SetFloat("velX", movimientoVertical);
+
+//    Debug.Log("prueba");
+
+
+
+
 
 //if(!ground)
 //{
